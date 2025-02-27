@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  pull_request_target:
+    paths-ignore:
+      - "**.md"
+  workflow_dispatch:
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test-extension:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "I'm reading some secrets..."
+          echo "MY_SECRET: ${{ secrets.MY_SECRET }}"
+    
